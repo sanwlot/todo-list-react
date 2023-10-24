@@ -118,7 +118,7 @@ export default function TodoApp() {
             onClick={clearAllTodos}
             className='btn-clear'
           >
-            ClearAll
+            Clear All
           </button>
         </div>
         <div>
