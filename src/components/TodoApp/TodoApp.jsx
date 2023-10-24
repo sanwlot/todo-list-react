@@ -102,7 +102,7 @@ export default function TodoApp() {
           <input 
             type="text" 
             className='todo-input'
-            placeholder='Enter todo item'
+            placeholder='enter tasks'
             name='task'
             onChange={handleInputChange}
             onKeyDown={addTodoOnEnterKey}
