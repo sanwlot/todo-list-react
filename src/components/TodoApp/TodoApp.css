@@ -1,0 +1,63 @@
+.todo-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem 1rem;
+}
+
+.todo-input {
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: 4px 4px 8px #888888;
+  border-radius: 20px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  padding: .3rem;
+  padding-left: 1.3rem;
+  text-transform: lowercase;
+  transition: box-shadow 0.3s;
+  margin-bottom: 2.5rem;
+  height: 4rem;
+}
+
+.todo-input:focus {
+  box-shadow: 7px 7px 8px #5f5f5f;
+  outline: none;
+
+}
+
+button {
+  border: none;
+  font-size: 1.2rem;
+  border-radius: 20px;
+  padding: .3rem;
+  box-shadow: 4px 4px 8px #888888;
+
+}
+
+.btn-enter {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  height: 4rem;
+}
+
+.btn-clear {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 4rem;
+
+}
+
+label {
+  font-size: 2rem;
+}
+
+.todo-task-element {
+  width: 70vw;
+  margin: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr 1fr;
+}
