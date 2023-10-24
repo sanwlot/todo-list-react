@@ -15,7 +15,6 @@
   border-bottom-right-radius: 0px;
   padding: .3rem;
   padding-left: 1.3rem;
-  text-transform: lowercase;
   transition: box-shadow 0.3s;
   margin-bottom: 2.5rem;
   height: 4rem;
@@ -31,7 +30,7 @@ button {
   border: none;
   font-size: 1.2rem;
   border-radius: 20px;
-  padding: .3rem;
+  padding: .3rem 1rem;
   box-shadow: 4px 4px 8px #888888;
 
 }
@@ -51,8 +50,13 @@ button {
 
 }
 
+.checkbox {
+  cursor: pointer;
+}
+
 label {
-  font-size: 2rem;
+  font-size: 3rem;
+  font-weight: bold;
 }
 
 .todo-task-element {
@@ -60,4 +64,8 @@ label {
   margin: 1rem;
   display: grid;
   grid-template-columns: 1fr 4fr 1fr 1fr;
+}
+
+.todo-btn {
+  margin: 0 1rem;
 }

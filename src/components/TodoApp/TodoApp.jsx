@@ -45,7 +45,7 @@ export default function TodoApp() {
         return prevTodoList.map(todo => {
           if (id === todo.id) {
             return {
-              ...prevTodoList,
+              ...todo,
               task
             }
           } else {
@@ -80,6 +80,7 @@ export default function TodoApp() {
     return (
       <div key={todo.id} className='todo-task-element'>
         <input 
+          className='checkbox'
           type="checkbox"
           onChange={()=>handleCheckBox(todo.id)}
           value={todo.isFinished}
@@ -89,8 +90,8 @@ export default function TodoApp() {
         >
           {todo.task}
         </label> 
-        <button onClick={()=>editTodo(todo.id)}>&#128221;</button> 
-        <button onClick={()=>deleteTodo(todo.id)}>&#128465;</button> 
+        <button onClick={()=>editTodo(todo.id)} className='todo-btn' >Edit</button> 
+        <button onClick={()=>deleteTodo(todo.id)} className='todo-btn' >Delete</button> 
       </div>
     )
   })
