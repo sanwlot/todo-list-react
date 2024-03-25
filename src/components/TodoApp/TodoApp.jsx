@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export default function TodoApp() {
-  const [task, setTask] = useState("");
-  const [editTask, setEditTask] = useState("");
   const [todoList, setTodoList] = useState(
     JSON.parse(localStorage.getItem("todoList")) || []
   );
+
+  const [task, setTask] = useState("");
+  const [editTask, setEditTask] = useState("");
 
   useEffect(() => {
     localStorage.setItem("todoList", JSON.stringify(todoList));
