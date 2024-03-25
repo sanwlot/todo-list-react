@@ -13,26 +13,25 @@
   border-radius: 20px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
-  padding: .3rem;
+  padding: 0.3rem;
   padding-left: 1.3rem;
   transition: box-shadow 0.3s;
   margin-bottom: 2.5rem;
   height: 4rem;
+  width: 30rem;
 }
 
 .todo-input:focus {
   box-shadow: 7px 7px 8px #5f5f5f;
   outline: none;
-
 }
 
 button {
   border: none;
   font-size: 1.2rem;
   border-radius: 20px;
-  padding: .3rem 1rem;
+  padding: 0.3rem 1rem;
   box-shadow: 4px 4px 8px #888888;
-
 }
 
 .btn-enter {
@@ -47,25 +46,85 @@ button {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 4rem;
-
 }
 
-.checkbox {
+.todo-list {
+}
+
+.todo-item {
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.edit-todo-input {
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 18px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: 4px 4px 8px #888888;
+  height: 45px;
+
+  &:focus {
+    box-shadow: 7px 7px 8px #5f5f5f;
+    outline: none;
+  }
+}
+
+.save-edit-btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 10px;
+  background-color: rgb(12, 59, 100);
+  color: white;
+  font-size: 14px;
+  height: 45px;
   cursor: pointer;
 }
 
-label {
-  font-size: 3rem;
-  font-weight: bold;
+.edit-btn,
+.del-btn,
+.save-edit-btn,
+.btn-enter,
+.btn-clear {
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: 7px 7px 8px #5f5f5f;
+  }
+  &:active {
+    box-shadow: none;
+  }
+}
+
+.edit-btn,
+.del-btn {
+  padding: 10px;
+  font-size: 14px;
+  height: 45px;
+  width: 70px;
+  cursor: pointer;
+}
+.edit-btn {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.del-btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: rgb(12, 59, 100);
+  color: white;
 }
 
 .todo-task-element {
   width: 70vw;
   margin: 1rem;
-  display: grid;
-  grid-template-columns: 1fr 4fr 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .todo-btn {
-  margin: 0 1rem;
 }
