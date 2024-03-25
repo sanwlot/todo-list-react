@@ -1,11 +1,11 @@
 header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: rgb(12, 59, 100);
   color: white;
   padding: 1.5rem;
-  font-family: 'Lilita One', sans-serif;
+  font-family: "Lilita One", sans-serif;
 }
 
 header h1 {

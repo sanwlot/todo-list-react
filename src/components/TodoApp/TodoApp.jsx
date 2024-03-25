@@ -1,28 +1,93 @@
 import "./TodoApp.css";
 import { useEffect, useState } from "react";
+import {
+  collection,
+  doc,
+  setDoc,
+  query,
+  getDocs,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../../../firebase";
 import { v4 as uuidv4 } from "uuid";
 
-export default function TodoApp() {
-  const [todoList, setTodoList] = useState(
-    JSON.parse(localStorage.getItem("todoList")) || []
-  );
-
+export default function TodoApp({ userId }) {
+  const [todoList, setTodoList] = useState([]);
   const [task, setTask] = useState("");
   const [editTask, setEditTask] = useState("");
 
   useEffect(() => {
-    localStorage.setItem("todoList", JSON.stringify(todoList));
-  }, [todoList]);
+    const fetchTodos = async () => {
+      if (userId) {
+        // Create a reference to the user's todos collection
+        const todosCollection = collection(db, "users", userId, "todos");
 
-  function addTodo() {
-    if (task) {
-      setTodoList((prevTodoList) => {
-        return [
-          ...prevTodoList,
-          { id: uuidv4(), task, isFinished: false, editInput: false },
-        ];
-      });
-      setTask("");
+        // Query the todos collection to get all documents
+        const todosQuery = query(todosCollection);
+
+        try {
+          // Fetch the documents from the todos collection
+          const snapshot = await getDocs(todosQuery);
+
+          // Extract data from the documents and update state
+          const todosData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          // using to toSorted instead of sort for avoiding mutation of the original array
+          const sortedTodos = todosData.toSorted(
+            (a, b) => b.created - a.created
+          );
+          console.log(`todos of ${userId}`);
+          setTodoList(sortedTodos);
+        } catch (error) {
+          alert("Error fetching todos: ", error);
+        }
+      } else {
+        console.log("User is not logged in, Can't fetch the todos!");
+        setTodoList([]);
+      }
+    };
+
+    fetchTodos();
+  }, [userId]);
+
+  async function addTodo() {
+    if (task && userId) {
+      try {
+        const todoID = uuidv4();
+        const usersCollection = collection(db, "users");
+        const userDocRef = doc(usersCollection, userId);
+
+        const userTodosCollection = collection(userDocRef, "todos");
+        const todoDocRef = doc(userTodosCollection, todoID);
+
+        const todoData = {
+          id: todoID,
+          task,
+          isFinished: false,
+          editInput: false,
+          created: Date.now(),
+        };
+
+        setDoc(todoDocRef, todoData)
+          .then(() => {
+            console.log(
+              "todo document written successfully! ID:",
+              todoDocRef.id
+            );
+          })
+          .catch((error) => {
+            console.error("Error writing todo document: ", error);
+          });
+
+        // console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    } else {
+      alert("User ID is undefined.");
     }
   }
 
@@ -33,13 +98,20 @@ export default function TodoApp() {
   }
 
   function deleteTodo(id) {
-    setTodoList((prevTodoList) => {
-      return prevTodoList.filter((todo) => {
-        if (todo.id !== id) {
-          return todo;
-        }
-      });
-    });
+    // deleting todo from firestore
+    if (userId) {
+      const usersCollection = collection(db, "users");
+      const userDocRef = doc(usersCollection, userId);
+      const userTodosCollection = collection(userDocRef, "todos");
+      const todoDocRef = doc(userTodosCollection, id);
+      deleteDoc(todoDocRef)
+        .then(() => {
+          console.log("todo document deleted successfully! ID: ", id);
+        })
+        .catch((error) => {
+          console.error("Error deleting todo document: ", error);
+        });
+    }
   }
 
   function toggleLineThrough(id) {
@@ -77,19 +149,34 @@ export default function TodoApp() {
 
   function saveEditedTodo(id) {
     if (editTask) {
-      setTodoList((prevTodoList) => {
-        return prevTodoList.map((todo) => {
-          if (todo.id === id) {
-            return {
-              ...todo,
-              task: editTask,
-              editInput: false,
-            };
-          }
-          return todo;
-        });
-      });
-      setEditTask("");
+      // setTodoList((prevTodoList) => {
+      //   return prevTodoList.map((todo) => {
+      //     if (todo.id === id) {
+      //       return {
+      //         ...todo,
+      //         task: editTask,
+      //         editInput: false,
+      //       };
+      //     }
+      //     return todo;
+      //   });
+      // });
+      // setEditTask("");
+
+      // updating todo in firestore
+      if (userId) {
+        const usersCollection = collection(db, "users");
+        const userDocRef = doc(usersCollection, userId);
+        const userTodosCollection = collection(userDocRef, "todos");
+        const todoDocRef = doc(userTodosCollection, id);
+        updateDoc(todoDocRef, { task: editTask })
+          .then(() => {
+            console.log("todo document updated successfully! ID: ", id);
+          })
+          .catch((error) => {
+            console.error("Error updating todo document: ", error);
+          });
+      }
     }
   }
 
